@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PrimeNumberPicture", "PrimeNumberPicture\PrimeNumberPicture.pyproj", "{1B10C6EC-3E47-4D5F-80AD-016314139897}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B10C6EC-3E47-4D5F-80AD-016314139897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B10C6EC-3E47-4D5F-80AD-016314139897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D41A3985-D6EA-4045-ACC6-1864DC3B7078}
+	EndGlobalSection
+EndGlobal
