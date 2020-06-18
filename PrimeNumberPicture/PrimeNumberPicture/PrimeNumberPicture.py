@@ -1,5 +1,7 @@
 import random
+import numpy as np
 
+#素数判定(ミラーラビン)
 def is_prime(n,sample):
     #自然数以外は判定しない
     if n<=0:
@@ -33,7 +35,7 @@ def is_prime(n,sample):
         sample=1
 
     #サンプル数を表示
-    print("サンプル数"+str(sample)+"での検査を開始")
+    #print("サンプル数"+str(sample)+"での検査を開始")
 
     #sampleの回数分検査を行う
     for i in range(sample):
@@ -45,8 +47,7 @@ def is_prime(n,sample):
         a=random.randint(1,n-1)
         
         #経過表示
-        #print(str(i+1)+"回目:底a="+str(a))
-        print(str(i+1)+"回目")
+        #print(str(i+1)+"回目")
 
         #(a**d)%n==1ならば素数の可能性あり
         if pow(a,d,n)==1:
@@ -67,11 +68,79 @@ def is_prime(n,sample):
     #一定以上の確率で素数
     return True
 
-##メイン部分##
-n=2**9941-1
-sample=10
 
-if is_prime(n,sample):
-    print(str(1.0-pow(1/4,sample))+"以上の確率で素数")
-else:
-    print("合成数")
+#順列の全探索用の関数
+def search(depth,color_array,result):
+    for i in range(0,10):
+        if i not in color_array:
+            if depth>0:
+                search(depth-1,color_array+[i],result)
+            else:
+                result.append(color_array)
+                return
+
+
+#開始通知
+print("判定を開始します")
+
+#画像変換用のオフセット値
+offset=100
+#色の種類数
+colors=3
+#画素数(一辺)
+pixel_count=16
+
+#絵
+picture=np.array([
+    [0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0],
+    [0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0],
+    [0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0],
+    [0,0,0,1,1,1,1,1,1,1,1,2,1,1,0,0],
+    [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
+    [0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0],
+    [1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],
+    [0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
+    [0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0],
+    [0,0,0,0,1,1,1,1,1,1,0,0,0,0,1,1],
+    [0,0,0,0,0,1,1,1,1,1,1,0,0,1,1,0],
+    [0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0],
+    [0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1]
+    ])
+
+#オフセット調整
+picture=picture+offset
+
+#順列を求める
+list=[]
+search(colors,[],list)
+
+#順列ごとに素数判定
+for color_array in list:
+
+    #画像を配列としてコピー
+    array=picture
+
+    #色を値に置換
+    for i in range(0,colors):
+        array=np.where(array==offset+i,color_array[i],array)
+
+    #配列を整数に変換
+    n=0
+    digit=1
+    for y in reversed(range(0,pixel_count)):
+        for x in reversed(range(0,pixel_count)):
+            n=n+int(array[y,x])*digit
+            digit*=10
+
+    ##メイン部分##
+    sample=20
+
+    if is_prime(n,sample):
+        print(str(n))
+        print("は")
+        print(str(1.0-pow(1/4,sample))+"以上の確率(サンプル数:"+str(sample)+")で素数")
+    #else:
+        #print("合成数")
