@@ -82,6 +82,7 @@ def search(depth,color_array,result):
 
 #開始通知
 print("判定を開始します")
+print()
 
 #画像変換用のオフセット値
 offset=100
@@ -110,12 +111,20 @@ picture=np.array([
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1]
     ])
 
+#元画像表示
+print("元画像")
+print(str(picture))
+print()
+
 #オフセット調整
 picture=picture+offset
 
 #順列を求める
 list=[]
 search(colors,[],list)
+
+#いくつ存在するか
+prime_result_count=0
 
 #順列ごとに素数判定
 for color_array in list:
@@ -136,11 +145,22 @@ for color_array in list:
             digit*=10
 
     ##メイン部分##
-    sample=20
+    sample=50
 
     if is_prime(n,sample):
-        print(str(n))
-        print("は")
-        print(str(1.0-pow(1/4,sample))+"以上の確率(サンプル数:"+str(sample)+")で素数")
+        print("該当する素数が見つかりました")
+        print(str(array))
+        print()
+        #print(str(n))
+        #print("は")
+        #print(str(1.0-pow(1/4,sample))+"以上の確率(サンプル数:"+str(sample)+")で素数")
+
+        prime_result_count+=1
     #else:
         #print("合成数")
+
+#存在しない通知
+if prime_result_count<=0:
+    print("見つかりませんでした...")
+else:
+    print(str(prime_result_count)+"個見つかりました")
